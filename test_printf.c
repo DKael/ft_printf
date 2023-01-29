@@ -13,11 +13,11 @@ X     : 부호없는 16진법 정수 출력 (대문자 사용)
 
 
 <flag별 영향주는 형식지정자>
-# : x, X
+# : x, X, p
 ' ' : d, i
 + : d, i
-- : d, i
-*.* : d, i, u, x, X, c(width만 적용)
+- : d, i, c, s, p, u, x, X   (width가 충분히 커서 공백이 있을 경우)
+*.* : d & i & u & x & X(정밀도 길이보다 숫자 길이가 작으면 0으로 채워짐), c(width만 적용), s(정밀도 크기만큼 문자열 잘림)
 */
 
 int main()
@@ -235,6 +235,9 @@ int main()
     printf("with width 7  %%7d : |%7d|\n", num5);
     printf("with precision 5  %%.5d : |%.5d|\n", num5);
     printf("with width 7 & precision 5  %%7.5d : |%7.5d|\n", num5);
+    printf("with width 7  %%-7d : |%-7d|\n", num5);
+    printf("with precision 5  %%-0.5d : |%-0.5d|\n", num5);
+    printf("with width 7 & precision 5  %%-7.5d : |%-7.5d|\n", num5);
 
     printf("--------<case %%d, -1234>--------\n");
     printf("single  %%d : |%d|\n", num6);
@@ -302,7 +305,7 @@ int main()
     printf("with wiith 1 & precision 1  %%1.1i : |%1.1i|\n", num0);
     printf("with wiith 7  %%7i : |%7i|\n", num0);
     printf("with precision 5  %%.5i : |%.5i|\n", num0);
-    printf("with wiith 7 & precision 5  %%7.5i : |%7.5i|\n", num0);
+    printf("with wiith 7 & precision 5  %%07.5i : |%7.5i|\n", num0);
 
     printf("--------<case %%i, +1>--------\n");
     printf("single  %%i : |%i|\n", num1);
@@ -1237,36 +1240,45 @@ int main()
 
     printf("--------<case %%c, 'a'>--------\n");
     printf("single  %%c : |%c|\n", chr);
-    printf("with flag +  %%+c : |%+c|\n", chr);
-    printf("with flag -  %%-c : |%-c|\n", chr);
-    printf("with flag -+  %%+-c : |%-+c|\n", chr);
-    printf("with flag +-  %%+-c : |%+-c|\n", chr);
-    printf("with flag ' '  %% c : |% c|\n", chr);
-    printf("with flag ' '+  %% +c : |% +c|\n", chr);
-    printf("with flag ' '-  %% -c : |% -c|\n", chr);
-    printf("with flag ' '-+  %% -+c : |% -+c|\n", chr);
-    printf("with flag ' '+-  %% +-c : |% +-c|\n", chr);
-    printf("with flag ' '-+  %% ++c : |% -+c|\n", chr);
-    printf("with flag ' '+-  %% +-c : |% +-c|\n", chr);
-    printf("with flag +' '  %%+ c : |%+ c|\n", chr);
-    printf("with flag -' '  %%- c : |%- c|\n", chr);
-    printf("with flag -+' '  %%-+ c : |%-+ c|\n", chr);
-    printf("with flag +-' '  %%+- c : |%+- c|\n", chr);
-    printf("with flag -+' '  %%++ c : |%-+ c|\n", chr);
-    printf("with flag +-' '  %%-- c : |%+- c|\n", chr);
-    //# is no effect to %c printf("with flag #  %%#c : |%#c|\n", num0);
-    printf("with wicth -1  %%-1c : |%-1c|\n", chr);
-    printf("with precision -1  %%-.1c : |%-.1c|\n", chr);
-    /*음수 wicth는 -기호가 기존의 '-'flag로 인식이 되어서 별 영향없음
-    음수 precision은 .-1 이런식 표현은 애초에 없고 -.1은 위와 같이 -플래그로 인식*/
-    printf("with wicth 0  %%0c : |%0c|\n", chr);
-    printf("with precision 0  %%.0c : |%.0c|\n", chr);
-    printf("with wicth 0 & precision 0  %%0.0c : |%0.0c|\n", chr);
+    printf("with width -1  %%-1c : |%-1c|\n", chr);
+    printf("with width -7  %%-7c : |%-7c|\n", chr);
+    printf("with width 0  %%0c : |%0c|\n", chr);
     printf("with wicth 1  %%1c : |%1c|\n", chr);
-    printf("with precision 1  %%.1c : |%.1c|\n", chr);
-    printf("with wicth 1 & precision 1  %%1.1c : |%1.1c|\n", chr);
     printf("with wicth 7  %%7c : |%7c|\n", chr);
-    printf("with precision 5  %%.5c : |%.5c|\n", chr);
-    printf("with wicth 7 & precision 5  %%7.5c : |%7.5c|\n", chr);
-    printf("with flag #  %%#c : |%#c|\n", chr);
+
+    printf("--------<case %%s, \"test_printf\">--------\n");
+    printf("single  %%s : |%s|\n", str);
+    printf("with width -1  %%-1s : |%-1s|\n", str);
+    printf("with width -7  %%-7s : |%-7s|\n", str);
+    printf("with width -15  %%-15s : |%-15s|\n", str);
+    printf("with width 0  %%0s : |%0s|\n", str);
+    printf("with wicth 1  %%1s : |%1s|\n", str);
+    printf("with wicth 7  %%7s : |%7s|\n", str);
+    printf("with wicth 15  %%15s : |%15s|\n", str);
+    printf("with precision 0  %%.0s : |%.0s|\n", str);
+    printf("with precision 1  %%.1s : |%.1s|\n", str);
+    printf("with precision 7  %%.7s : |%.7s|\n", str);
+    printf("with precision 15  %%.15s : |%.15s|\n", str);
+    printf("with wiXth 0 & precision 7  %%0.7s : |%0.7s|\n", str);
+    printf("with wiXth 1 & precision 7  %%1.7s : |%1.7s|\n", str);
+    printf("with wiXth 7 & precision 7  %%7.7s : |%7.7s|\n", str);
+    printf("with wiXth 15 & precision 7  %%15.7s : |%15.7s|\n", str);
+    printf("with wiXth 0 & precision 15  %%0.15s : |%0.15s|\n", str);
+    printf("with wiXth 1 & precision 15  %%1.15s : |%1.15s|\n", str);
+    printf("with wiXth 7 & precision 15  %%7.15s : |%7.15s|\n", str);
+    printf("with wiXth 15 & precision 15  %%15.15s : |%15.15s|\n", str);
+
+    printf("--------<case %%p, str's address>--------\n");
+    printf("single %%p : |%p|\n", str);
+    printf("with flag #  %%#p : |%#p|\n", str);
+    printf("single %%p : |%p|\n", NULL);
+    printf("with flag #  %%#p : |%#p|\n", NULL);
+
+    printf("with width 7  %%7d : |%7d|\n", num5);
+    printf("with width 7  %%7d : |%-7d|\n", num5);
+    printf("with width 7  %%7d : |%07d|\n", num5);
+    printf("with width 7  %%.7d : |%.7d|\n", num5);
+    printf("with width 7  %%7d : |% +tt #d|\n", num5);
+
+    printf("|% ++++++++++++     + md|", num5);
 }
