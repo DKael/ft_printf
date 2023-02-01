@@ -1,24 +1,8 @@
 #include <stdio.h>
-
-/*
-<구현할 형식 지정자>
-c     : 문자 하나 출력
-s     : 문자열 출력
-p     : 포인터 주소 출력
-d & i : 부호 있는 십진법 정수 출력
-u     : 부호 없는 십진법 정수 출력
-x     : 부호없는 16진법 정수 출력 (소문자 사용)
-X     : 부호없는 16진법 정수 출력 (대문자 사용) 
-%     : % 문자 출력
-
-
-<flag별 영향주는 형식지정자>
-# : x, X, p
-' ' : d, i
-+ : d, i
-- : d, i, c, s, p, u, x, X   (width가 충분히 커서 공백이 있을 경우)
-*.* : d & i & u & x & X(정밀도 길이보다 숫자 길이가 작으면 0으로 채워짐), c(width만 적용), s(정밀도 크기만큼 문자열 잘림)
-*/
+#include "ft_printf.h"
+#include "ft_printf.c"
+#include "libft/ft_isdigit.c"
+#include "libft/ft_strlen.c"
 
 int main()
 {
@@ -30,7 +14,7 @@ int main()
     int num5 = 1234;
     int num6 = -1234;
     char chr = 'a';
-    char* str = "test_printf";
+    char* str = "abcdefghijklmnop";
 
     printf("--------<case %%d, 0>--------\n");
     printf("single  %%d : |%d|\n", num0);
@@ -1280,5 +1264,43 @@ int main()
     printf("with width 7  %%.7d : |%.7d|\n", num5);
     printf("with width 7  %%7d : |% +tt #d|\n", num5);
 
-    printf("|% ++++++++++++     + md|", num5);
+    //printf(NULL);
+    printf(   "|% +++++++-+++++10.7 % %% 0 % 10.5  s+ %#p|\n", str,str);
+    printf(   "|% +++++++-+++++10.7 % %% 0 % 10.5  s+ %20.7p|\n", str,str);
+    ft_printf("|% +++++++-+++++10.7 % %% 0 % 10.5  s+ |\n", str);
 }
+
+/*
+Modifier          d, i           o, u, x, X            n
+hh                signed char    unsigned char         signed char *
+h                 short          unsigned short        short *
+l (ell)           long           unsigned long         long *
+ll (ell ell)      long long      unsigned long long    long long *
+j                 intmax_t       uintmax_t             intmax_t *
+t                 ptrdiff_t      (see note)            ptrdiff_t *
+z                 (see note)     size_t                (see note)
+q (deprecated)    quad_t         u_quad_t              quad_t *
+*/
+
+/*
+<구현할 형식 지정자>
+c     : 문자 하나 출력(-, width)
+s     : 문자열 출력 (-, width, precision)
+p     : 포인터 주소 출력 (-, width)
+d & i : 부호 있는 십진법 정수 출력
+u     : 부호 없는 십진법 정수 출력
+x     : 부호없는 16진법 정수 출력 (소문자 사용)
+X     : 부호없는 16진법 정수 출력 (대문자 사용) 
+%     : % 문자 출력(-, width)
+
+
+<flag별 영향주는 형식지정자>
+# : x, X, p
+' ' : d, i
++ : d, i
+- : d, i, c, s, p, u, x, X   (width가 충분히 커서 공백이 있을 경우)
+*.* : d & i & u & x & X(정밀도 길이보다 숫자 길이가 작으면 0으로 채워짐), c(width만 적용), s(정밀도 크기만큼 문자열 잘림)
+0
+
+0 플래그는 정밀도 있으면 무시됨
+*/
