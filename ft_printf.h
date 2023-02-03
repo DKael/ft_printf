@@ -22,5 +22,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include "libft/libft.h"	
+
+int		ft_printf(const char *format, ...);
+bool 	flags_check(char input);
+void 	print_blank(int size);
+void 	print_zero(int size);
 
 #endif
