@@ -11,345 +11,92 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
+static void	get_width(const char *format, t_pdata *data);
+static void	get_precision(const char *format, t_pdata *data);
+
 int	ft_printf(const char *format, ...)
 {
-	va_list			arg;
-	int				idx;
-	int				head;
-	int				print_count;
-	int				flag;
+	t_pdata	data;
 
-	char			chr;
-	char			*str;
-	void			*ptr;
-	int				num;
-	unsigned int	unum;
-
-	int width;
-	int precision;
-
-	int str_len;
-
-	va_start(arg, format);
-	idx = -1;
-	head = 0;
-	print_count = 0;
-	flag = 0;
-	width = 0;
-	precision = 0;
-	while (format[++idx] != '\0')
+	va_start(data.arg, format);
+	init(&data);
+	while (format[++(data.idx)] != '\0')
 	{
-		if (format[idx] == '%')
+		if (format[(data.idx)] == '%')
 		{
-			write(1, &(format[head]), idx - head);
-			while (flags_check(format[++idx]))
-			{
-				if (format[idx] == '#')
-					flag |= SHARP_FLAG;
-				else if (format[idx] == ' ')
-					flag |= BLANK_FLAG;
-				else if (format[idx] == '-')
-					flag |= MINUS_FLAG;
-				else if (format[idx] == '+')
-					flag |= PLUS_FLAG;
-				else if (format[idx] == '0')
-					flag |= ZERO_FLAG;
-				else if (ft_isdigit(format[idx]))
-				{
-					width = format[idx] - '0';
-					while (ft_isdigit(format[++idx]))
-						width = width * 10 + (format[idx] - '0');
-					idx--;
-				}
-				else if (format[idx] == '.' )
-				{
-					precision = 0;
-					while (ft_isdigit(format[++idx]))
-						precision = precision * 10 + (format[idx] - '0');
-					idx--;
-				}
-			}
-//---------------------------------------------------------------------------------------------------------------
-			if (format[idx] == 'c')
-			{
-				chr = va_arg(arg, int);
-				if (flag & MINUS_FLAG)
-				{
-					write(1, &chr, 1);
-					if (width != 0)
-						print_blank(width - 1);
-				}
-				else
-				{
-					if (width != 0)
-						print_blank(width - 1);
-					write(1, &chr, 1);
-				}
-					head = idx + 1;
-					precision = 0;
-					width = 0;
-					print_count++;
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else if(format[idx] == 's')
-			{
-				str = va_arg(arg, char *);
-				str_len = ft_strlen(str);
-				if (flag & MINUS_FLAG)
-				{
-					write(1, str, precision);
-					if (width != 0)
-						print_blank(width - precision);
-				}
-				else
-				{
-					if (width != 0)
-						print_blank(width - precision);
-					write(1, str, precision);
-				}
-				head = idx + 1;
-				flag = 0;
-				precision = 0;
-				width = 0;
-				print_count++;
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else if(format[idx] == 'p')
-			{
-				ptr = va_arg(arg, void *);
-				
-
-				int		len;
-				char	*addr;
-
-				addr = ft_itoa_ptr(ptr);
-				len = ft_strlen(addr);
-				if (flag & MINUS_FLAG)
-				{
-					write(1, "0x", 2);
-					if (precision != 0)
-						print_zero(precision - len);
-					write(1, addr, len);
-					if (width != 0)
-					{
-						if (len > precision)
-							print_blank(width - len  - 2);
-						else
-							print_blank(width - precision - 2);
-					}
-				}
-				else
-				{
-					if (flag & ZERO_FLAG && precision == 0)
-					{
-						write(1, "0x", 2);
-						if (width != 0)
-						{
-							if (len > precision)
-								print_zero(width - len - 2);
-							else
-								print_zero(width - precision - 2);
-						}
-						if (precision != 0)
-							print_zero(precision - len);
-						write(1, addr, len);
-					}
-					else 
-					{
-						if (width != 0)
-						{
-							if (len > precision)
-								print_blank(width - len - 2);
-							else
-								print_blank(width - precision - 2);
-						}
-						write(1, "0x", 2);
-						if (precision != 0)
-							print_zero(precision - len);
-						write(1, addr, len);
-					}
-				}
-				free(addr);
-				head = idx + 1;
-				flag = 0;
-				precision = 0;
-				width = 0;
-				print_count++;
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else if(format[idx] == 'd' || format[idx] == 'i')
-			{
-				num = va_arg(arg, int);
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else if(format[idx] == 'u')
-			{
-				unum = va_arg(arg, unsigned int);
-
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else if(format[idx] == 'x' || format[idx] == 'X')
-			{
-				unum = va_arg(arg, unsigned int);
-
-				int		len;
-				char	*hex;
-				char	*suffix;
-				int		suffix_len;
-
-				hex = ft_itoa_hex(unum, format[idx]);
-				len = ft_strlen(hex);
-				suffix_len = 0;
-				if (flag & SHARP_FLAG && unum != 0)
-				{
-						suffix = "0x";
-						if (format[idx] == 'X')
-							suffix = "0X";
-						suffix_len = 2;
-				}
-				if (flag & MINUS_FLAG)
-				{
-					if (flag & SHARP_FLAG && unum != 0)
-						write(1, suffix, suffix_len);
-					if (precision != 0)
-						print_zero(precision - len);
-					write(1, hex, len);
-					if (width != 0)
-					{
-						if (len > precision)
-							print_blank(width - len  - suffix_len);
-						else
-							print_blank(width - precision - suffix_len);
-					}
-				}
-				else
-				{
-					if (flag & ZERO_FLAG && precision == 0)
-					{
-						if (flag & SHARP_FLAG && unum != 0)
-							write(1, suffix, suffix_len);
-						if (width != 0)
-						{
-							if (len > precision)
-								print_zero(width - len - suffix_len);
-							else
-								print_zero(width - precision - suffix_len);
-						}
-						if (precision != 0)
-							print_zero(precision - len);
-						write(1, hex, len);
-					}
-					else 
-					{
-						if (width != 0)
-						{
-							if (len > precision)
-								print_blank(width - len - suffix_len);
-							else
-								print_blank(width - precision - suffix_len);
-						}
-						if (flag & SHARP_FLAG && unum != 0)
-							write(1, suffix, suffix_len);
-						if (precision != 0)
-							print_zero(precision - len);
-						write(1, hex, len);
-					}
-				}
-				free(hex);
-				head = idx + 1;
-				flag = 0;
-				precision = 0;
-				width = 0;
-				print_count++;
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else if(format[idx] == '%')
-			{
-				if (flag & MINUS_FLAG)
-				{
-					write(1, "\045", 1);
-					if (width != 0)
-						print_blank(width - 1);
-				}
-				else
-				{
-					if (width != 0)
-						print_blank(width - 1);
-					write(1, "\045", 1);
-				}
-				head = idx + 1;
-				flag = 0;
-				precision = 0;
-				width = 0;
-				print_count++;
-			}
-//---------------------------------------------------------------------------------------------------------------
-			else
-			{
-				head = idx;
-				print_count++;
-			}
+			format_read(format, &data);
+			format_print(format, &data);
+			data.head = data.idx + 1;
+			data.flag = 0;
+			data.precision = 0;
+			data.width = 0;
+			data.print_count++;
 		}
 		else
-			print_count++;		
+			data.print_count++;
 	}
-	write(1, &(format[head]), idx - head);
-	va_end(arg);
-	return (print_count);
+	write(1, &(format[data.head]), data.idx - data.head);
+	va_end(data.arg);
+	return (data.print_count);
 }
 
-bool flags_check(char input)
+void	format_read(const char *format, t_pdata *data)
 {
-	char *cvs;
-	int	idx;
-
-	cvs = "# -+0.";
-	idx = 0;
-	while (cvs[idx] != '\0')
+	write(1, &(format[data->head]), data->idx - data->head);
+	while (flags_check(format[++(data->idx)]))
 	{
-		if (input == cvs[idx])
-			return (true);
-		idx++;
+		if (format[data->idx] == '#')
+			data->flag |= SHARP_FLAG;
+		else if (format[data->idx] == ' ')
+			data->flag |= BLANK_FLAG;
+		else if (format[data->idx] == '-')
+			data->flag |= MINUS_FLAG;
+		else if (format[data->idx] == '+')
+			data->flag |= PLUS_FLAG;
+		else if (format[data->idx] == '0')
+			data->flag |= ZERO_FLAG;
+		else if (ft_isdigit(format[data->idx]))
+			get_width(format, data);
+		else if (format[data->idx] == '.' )
+			get_precision(format, data);
 	}
-	if (ft_isdigit(input))
-		return (true);
-	return (false);
 }
 
-void print_blank(int size)
+static void	get_width(const char *format, t_pdata *data)
 {
-	char	*box;
-	int		idx;
-
-	if (size > 0)
-	{
-		box = (char *)malloc(sizeof(char) * size);
-		idx = 0;
-		while (idx < size)
-		{
-			box[idx] = ' ';
-			idx++;
-		}
-		write(1, box, size);
-		free(box);
-	}	
+	data->width = format[data->idx] - '0';
+	while (ft_isdigit(format[++(data->idx)]))
+		data->width = data->width * 10 + (format[data->idx] - '0');
+	data->idx--;
 }
 
-void print_zero(int size)
+static void	get_precision(const char *format, t_pdata *data)
 {
-	char	*box;
-	int		idx;
+	data->precision = 0;
+	while (ft_isdigit(format[++(data->idx)]))
+		data->precision = data->precision * 10 + (format[data->idx] - '0');
+	data->idx--;
+}
 
-	if (size > 0)
+void	format_print(const char *format, t_pdata *data)
+{
+	if (format[data->idx] == 'c')
+		case_c(data);
+	else if (format[data->idx] == 's')
+		case_s(data);
+	else if (format[data->idx] == 'p')
+		case_p(data);
+	else if (format[data->idx] == 'd' || format[data->idx] == 'i')
+		case_d_and_i(data);
+	else if (format[data->idx] == 'u')
+		case_u(data);
+	else if (format[data->idx] == 'x' || format[data->idx] == 'X')
+		case_x(data, format[data->idx]);
+	else if (format[data->idx] == '%')
+		case_percent(data);
+	else
 	{
-		box = (char *)malloc(sizeof(char) * size);
-		idx = 0;
-		while (idx < size)
-		{
-			box[idx] = '0';
-			idx++;
-		}
-		write(1, box, size);
-		free(box);
+		data->head = data->idx;
+		(data->print_count)++;
 	}
 }

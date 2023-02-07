@@ -9,7 +9,7 @@
 /*   Updated: 2023/02/02 16:21:39 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-# include <stdlib.h>
+#include <stdlib.h>
 
 static char	*conversion_ptr(unsigned long long n, int digit);
 
@@ -31,8 +31,8 @@ char	*ft_itoa_ptr(void *ptr)
 	if (addr == 0)
 	{
 		result = (char *)malloc(sizeof(char) * 2);
-		if (result == (void *)0)
-            return ((void *)0);
+		if (result == NULL)
+			return (NULL);
 		result[0] = '0';
 		result[1] = '\0';
 		return (result);
@@ -47,8 +47,8 @@ static char	*conversion_ptr(unsigned long long addr, int digit)
 	char	*base;
 
 	result = (char *)malloc(sizeof(char) * (digit + 1));
-	if (result == (void *)0)
-        return ((void *)0);
+	if (result == NULL)
+		return (NULL);
 	result[digit--] = '\0';
 	base = "0123456789abcdef";
 	while (addr != 0)

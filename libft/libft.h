@@ -30,6 +30,7 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 char	*ft_itoa_hex(unsigned int n, char chr_x);
 char	*ft_itoa_ptr(void *ptr);
+char	*ft_itoa_unsigned(unsigned int n);
 char	*ft_itoa(int n);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
