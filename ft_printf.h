@@ -50,7 +50,7 @@ void	case_s(t_pdata *data);
 void	case_p(t_pdata *data);
 void	case_d_and_i(t_pdata *data);
 void	case_u(t_pdata *data);
-void	case_x_and_X(t_pdata *data, char x_chr);
+void	case_x(t_pdata *data, char x_chr);
 void	case_percent(t_pdata *data);
 void	init(t_pdata *data);
 bool	flags_check(char input);
