@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmkael <hyungdki@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 09:47:05 by dmkael            #+#    #+#             */
-/*   Updated: 2023/01/28 09:47:09 by dmkael           ###   ########.fr       */
+/*   Created: 2023/02/08 20:17:20 by dmkael            #+#    #+#             */
+/*   Updated: 2023/02/08 20:17:21 by dmkael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 static void	get_width(const char *format, t_pdata *data);
 static void	get_precision(const char *format, t_pdata *data);
@@ -72,7 +72,6 @@ static void	get_width(const char *format, t_pdata *data)
 static void	get_precision(const char *format, t_pdata *data)
 {
 	data->precision = 0;
-	data->flag |= PRECISION;
 	while (ft_isdigit(format[++(data->idx)]))
 		data->precision = data->precision * 10 + (format[data->idx] - '0');
 	data->idx--;

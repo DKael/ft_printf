@@ -25,20 +25,20 @@ SRCS =	ft_printf.c \
 
 OBJS = 	${SRCS:.c=.o}
 
-# SRCS_BONUS =	ft_printf_bonus.c \
-# 				ft_printf_utils_bonus.c \
-# 				case_c_bonus.c \
-# 				case_d_and_i_bonus.c \
-# 				case_p_bonus.c \
-# 				case_percent_bonus.c \
-# 				case_s_bonus.c \
-# 				case_u_bonus.c \
-# 				case_x_bonus.c \
-# 				ft_itoa_hex_bonus.c \
-# 				ft_itoa_ptr_bonus.c \
-# 				ft_itoa_unsigned_bonus.c
+SRCS_BONUS =	ft_printf_bonus.c \
+				ft_printf_utils_bonus.c \
+				case_c_bonus.c \
+				case_d_and_i_bonus.c \
+				case_p_bonus.c \
+				case_percent_bonus.c \
+				case_s_bonus.c \
+				case_u_bonus.c \
+				case_x_bonus.c \
+				ft_itoa_hex_bonus.c \
+				ft_itoa_ptr_bonus.c \
+				ft_itoa_unsigned_bonus.c
 
-# OBJS_BONUS = 	${SRCS_BONUS:.c=.o}
+OBJS_BONUS = 	${SRCS_BONUS:.c=.o}
 
 CC = cc
 
@@ -50,20 +50,17 @@ LIBFT_DIR = libft
 
 LIBFT_NAME = libft.a
 
-# ifdef WITH_BONUS
-# 	TOTAL_OBJS = ${OBJS_BONUS}
-# else
-# 	TOTAL_OBJS = ${OBJS}
-# endif
-TOTAL_OBJS = ${OBJS}
+ifdef WITH_BONUS
+	TOTAL_OBJS = ${OBJS_BONUS}
+else
+	TOTAL_OBJS = ${OBJS}
+endif
 
-${NAME} : ${LIBFT_NAME} ${TOTAL_OBJS}
-		cp ${LIBFT_DIR}/${LIBFT_NAME} .
+${NAME} : ${TOTAL_OBJS}
+		make -C ${LIBFT_DIR} all
+		cp ${LIBFT_DIR}/${LIBFT_NAME} ${NAME}
 		ar -rsc $@ $^
-
-${LIBFT_NAME} : 
-	make -C ${LIBFT_DIR} all
-
+	
 %.o :%.c
 	${CC} ${CFLAGS} -c -I. $< -o $@
 
@@ -81,7 +78,7 @@ re:
 	make fclean
 	make all
 
-# bonus:
-# 	@make WITH_BONUS=1
+bonus:
+	@make WITH_BONUS=1
 
 .PHONY: all clean fclean re bonus

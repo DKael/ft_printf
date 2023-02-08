@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   case_c.c                                           :+:      :+:    :+:   */
+/*   case_c_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyungdki <hyungdki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: dmkael <hyungdki@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 16:45:05 by hyungdki          #+#    #+#             */
-/*   Updated: 2023/02/07 16:45:07 by hyungdki         ###   ########.fr       */
+/*   Created: 2023/02/08 20:16:50 by dmkael            #+#    #+#             */
+/*   Updated: 2023/02/08 20:16:52 by dmkael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 void	case_c(t_pdata *data)
 {

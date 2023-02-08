@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   case_s.c                                           :+:      :+:    :+:   */
+/*   case_s_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyungdki <hyungdki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: dmkael <hyungdki@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 16:45:27 by hyungdki          #+#    #+#             */
-/*   Updated: 2023/02/07 16:45:28 by hyungdki         ###   ########.fr       */
+/*   Created: 2023/02/08 20:17:03 by dmkael            #+#    #+#             */
+/*   Updated: 2023/02/08 20:17:04 by dmkael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 static void	print_null(t_pdata *data);
 

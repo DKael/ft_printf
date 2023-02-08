@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmkael <hyungdki@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 09:47:12 by dmkael            #+#    #+#             */
-/*   Updated: 2023/01/28 09:47:16 by dmkael           ###   ########.fr       */
+/*   Created: 2023/02/08 20:17:25 by dmkael            #+#    #+#             */
+/*   Updated: 2023/02/08 20:17:26 by dmkael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_PRINTF_BONUS_H
+# define FT_PRINTF_BONUS_H
 
 # define SHARP_FLAG	1
 # define BLANK_FLAG	2
