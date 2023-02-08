@@ -43,16 +43,16 @@ void	case_x(t_pdata *data, char x_chr)
 static void	x_with_minus(t_pdata *data, int len, char *hex, t_suffix *sfx)
 {
 	if (data->flag & SHARP_FLAG && data->unum != 0)
-		write(1, sfx->suffix, sfx->suffix_len);
+		write_increase(data, sfx->suffix, sfx->suffix_len);
 	if (data->precision != 0)
-		print_zero(data->precision - len);
-	write(1, hex, len);
+		print_zero(data, data->precision - len);
+	write_increase(data, hex, len);
 	if (data->width != 0)
 	{
 		if (len > data->precision)
-			print_blank(data->width - len - sfx->suffix_len);
+			print_blank(data, data->width - len - sfx->suffix_len);
 		else
-			print_blank(data->width - data->precision - sfx->suffix_len);
+			print_blank(data, data->width - data->precision - sfx->suffix_len);
 	}
 }
 
@@ -61,23 +61,24 @@ static void	x_without_minus(t_pdata *data, int len, char *hex, t_suffix *sfx)
 	if (data->flag & ZERO_FLAG && data->precision == 0)
 	{
 		if (data->flag & SHARP_FLAG && data->unum != 0)
-			write(1, sfx->suffix, sfx->suffix_len);
+			write_increase(data, sfx->suffix, sfx->suffix_len);
 		if (data->width != 0)
-			print_zero(data->width - len - sfx->suffix_len);
+			print_zero(data, data->width - len - sfx->suffix_len);
 	}
 	else
 	{
 		if (data->width != 0)
 		{
 			if (len > data->precision)
-				print_blank(data->width - len - sfx->suffix_len);
+				print_blank(data, data->width - len - sfx->suffix_len);
 			else
-				print_blank(data->width - data->precision - sfx->suffix_len);
+				print_blank(data,
+					data->width - data->precision - sfx->suffix_len);
 		}
 		if (data->flag & SHARP_FLAG && data->unum != 0)
-			write(1, sfx->suffix, sfx->suffix_len);
+			write_increase(data, sfx->suffix, sfx->suffix_len);
 	}
 	if (data->precision != 0)
-		print_zero(data->precision - len);
-	write(1, hex, len);
+		print_zero(data, data->precision - len);
+	write_increase(data, hex, len);
 }

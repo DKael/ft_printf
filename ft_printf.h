@@ -18,11 +18,15 @@
 # define PLUS_FLAG	8
 # define ZERO_FLAG	16
 
+# define TRUE 1
+# define FALSE 0
+
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdbool.h>
 # include "libft/libft.h"
+
+typedef int	t_bool;
 
 typedef struct s_pdata
 {
@@ -53,8 +57,11 @@ void	case_u(t_pdata *data);
 void	case_x(t_pdata *data, char x_chr);
 void	case_percent(t_pdata *data);
 void	init(t_pdata *data);
-bool	flags_check(char input);
-void	print_blank(int size);
-void	print_zero(int size);
-
+t_bool	flags_check(char input);
+void	print_blank(t_pdata *data, int size);
+void	print_zero(t_pdata *data, int size);
+char	*ft_itoa_hex(unsigned int n, char chr_x);
+char	*ft_itoa_ptr(void *ptr);
+char	*ft_itoa_unsigned(unsigned int n);
+void	write_increase(t_pdata *data, char *to_write, int len);
 #endif

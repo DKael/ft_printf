@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_hex.c                                      :+:      :+:    :+:   */
+/*   ft_itoa_unsigned.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyungdki <hyungdki@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 16:21:38 by hyungdki          #+#    #+#             */
-/*   Updated: 2023/02/02 16:21:39 by hyungdki         ###   ########.fr       */
+/*   Created: 2023/02/07 11:58:14 by hyungdki          #+#    #+#             */
+/*   Updated: 2023/02/07 11:58:15 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+#include "ft_printf.h"
 
-static char	*conversion_hex(unsigned int n, int digit, char chr_x);
+static char	*conversion_unsigned(unsigned int n, int digit);
 
-char	*ft_itoa_hex(unsigned int n, char chr_x)
+char	*ft_itoa_unsigned(unsigned int n)
 {
 	int				digit;
 	unsigned int	temp_n;
@@ -24,7 +24,7 @@ char	*ft_itoa_hex(unsigned int n, char chr_x)
 	while (temp_n != 0)
 	{
 		digit++;
-		temp_n /= 16;
+		temp_n /= 10;
 	}
 	if (n == 0)
 	{
@@ -36,26 +36,21 @@ char	*ft_itoa_hex(unsigned int n, char chr_x)
 		return (result);
 	}
 	else
-		return (conversion_hex(n, digit, chr_x));
+		return (conversion_unsigned(n, digit));
 }
 
-static char	*conversion_hex(unsigned int n, int digit, char chr_x)
+static char	*conversion_unsigned(unsigned int n, int digit)
 {
 	char	*result;
-	char	*base;
 
 	result = (char *)malloc(sizeof(char) * (digit + 1));
 	if (result == NULL)
 		return (NULL);
 	result[digit--] = '\0';
-	if (chr_x == 'x')
-		base = "0123456789abcdef";
-	else
-		base = "0123456789ABCDEF";
 	while (n != 0)
 	{
-		result[digit--] = base[(n % 16)];
-		n /= 16;
+		result[digit--] = (n % 10) + '0';
+		n /= 10;
 	}
 	return (result);
 }

@@ -9,7 +9,7 @@
 /*   Updated: 2023/02/02 16:21:39 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+#include "ft_printf.h"
 
 static char	*conversion_ptr(unsigned long long n, int digit);
 

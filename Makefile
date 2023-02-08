@@ -10,69 +10,59 @@
 #                                                                              #
 # **************************************************************************** #
 
+SRCS =	ft_printf.c \
+		ft_printf_utils.c \
+		case_c.c \
+		case_d_and_i.c \
+		case_p.c \
+		case_percent.c \
+		case_s.c \
+		case_u.c \
+		case_x.c \
+		ft_itoa_hex.c \
+		ft_itoa_ptr.c \
+		ft_itoa_unsigned.c
+
+OBJS = 	${SRCS:.c=.o}
+
+# SRCS_BONUS =	ft_printf_bonus.c \
+# 				ft_printf_utils_bonus.c \
+# 				case_c_bonus.c \
+# 				case_d_and_i_bonus.c \
+# 				case_p_bonus.c \
+# 				case_percent_bonus.c \
+# 				case_s_bonus.c \
+# 				case_u_bonus.c \
+# 				case_x_bonus.c \
+# 				ft_itoa_hex_bonus.c \
+# 				ft_itoa_ptr_bonus.c \
+# 				ft_itoa_unsigned_bonus.c
+
+# OBJS_BONUS = 	${SRCS_BONUS:.c=.o}
+
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS =	ft_atoi.c \
-		ft_bzero.c \
-		ft_calloc.c \
-		ft_isalnum.c \
-		ft_isalpha.c \
-		ft_isascii.c \
-		ft_isdigit.c \
-		ft_isprint.c \
-		ft_itoa.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_memcpy.c \
-		ft_memmove.c \
-		ft_memset.c \
-		ft_putchar_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_putstr_fd.c \
-		ft_split.c \
-		ft_strchr.c \
-		ft_strdup.c \
-		ft_striteri.c \
-		ft_strjoin.c \
-		ft_strlcat.c \
-		ft_strlcpy.c \
-		ft_strlen.c \
-		ft_strmapi.c \
-		ft_strncmp.c \
-		ft_strnstr.c \
-		ft_strrchr.c \
-		ft_strtrim.c \
-		ft_substr.c \
-		ft_tolower.c \
-		ft_toupper.c
+NAME = libftprintf.a
 
-OBJS = 	${SRCS:.c=.o}
+LIBFT_DIR = libft
 
-SRCS_BONUS =	ft_lstadd_back.c \
-				ft_lstadd_front.c \
-				ft_lstclear.c \
-				ft_lstdelone.c \
-				ft_lstiter.c \
-				ft_lstlast.c \
-				ft_lstmap.c \
-				ft_lstnew.c \
-				ft_lstsize.c
+LIBFT_NAME = libft.a
 
-OBJS_BONUS = 	${SRCS_BONUS:.c=.o}
+# ifdef WITH_BONUS
+# 	TOTAL_OBJS = ${OBJS_BONUS}
+# else
+# 	TOTAL_OBJS = ${OBJS}
+# endif
+TOTAL_OBJS = ${OBJS}
 
-NAME = libft.a
+${NAME} : ${LIBFT_NAME} ${TOTAL_OBJS}
+		cp ${LIBFT_DIR}/${LIBFT_NAME} .
+		ar -rsc $@ $^
 
-ifdef WITH_BONUS
-	TOTAL_OBJS = $(OBJS) $(OBJS_BONUS)
-else
-	TOTAL_OBJS = $(OBJS)
-endif
-
-${NAME} : ${TOTAL_OBJS}
-		ar -rsc ${NAME} ${TOTAL_OBJS}
+${LIBFT_NAME} : 
+	make -C ${LIBFT_DIR} all
 
 %.o :%.c
 	${CC} ${CFLAGS} -c -I. $< -o $@
@@ -80,17 +70,18 @@ ${NAME} : ${TOTAL_OBJS}
 all : ${NAME}
 
 clean:
-	rm -f $(OBJS) $(OBJS_BONUS)
+	make -C ${LIBFT_DIR} clean
+	rm -f ${OBJS} ${OBJS_BONUS}
 
 fclean: 
-	@$(MAKE) clean
-	rm -f  ${NAME}
+	make clean
+	rm -f ${NAME} ${LIBFT_NAME}
 
 re: 
-	@$(MAKE) fclean
-	@$(MAKE) all
+	make fclean
+	make all
 
-bonus:
-	@make WITH_BONUS=1
+# bonus:
+# 	@make WITH_BONUS=1
 
 .PHONY: all clean fclean re bonus

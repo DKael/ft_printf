@@ -21,7 +21,7 @@ void	init(t_pdata *data)
 	data->precision = 0;
 }
 
-bool	flags_check(char input)
+t_bool	flags_check(char input)
 {
 	char	*cvs;
 	int		idx;
@@ -31,15 +31,15 @@ bool	flags_check(char input)
 	while (cvs[idx] != '\0')
 	{
 		if (input == cvs[idx])
-			return (true);
+			return (TRUE);
 		idx++;
 	}
 	if (ft_isdigit(input))
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
-void	print_blank(int size)
+void	print_blank(t_pdata *data, int size)
 {
 	char	*box;
 	int		idx;
@@ -55,10 +55,11 @@ void	print_blank(int size)
 		}
 		write(1, box, size);
 		free(box);
+		data->print_count += size;
 	}	
 }
 
-void	print_zero(int size)
+void	print_zero(t_pdata *data, int size)
 {
 	char	*box;
 	int		idx;
@@ -74,5 +75,12 @@ void	print_zero(int size)
 		}
 		write(1, box, size);
 		free(box);
+		data->print_count += size;
 	}
+}
+
+void	write_increase(t_pdata *data, char *to_write, int len)
+{
+	write(1, to_write, len);
+	data->print_count += len;
 }

@@ -14,20 +14,20 @@
 void	case_s(t_pdata *data)
 {
 	char	*str;
-	int		str_len;
+	int		len;
 
 	str = va_arg(data->arg, char *);
-	str_len = ft_strlen(str);
+	len = ft_strlen(str);
 	if (data->flag & MINUS_FLAG)
 	{
-		write(1, str, data->precision);
+		write_increase(data, str, data->precision);
 		if (data->width != 0)
-			print_blank(data->width - data->precision);
+			print_blank(data, data->width - data->precision);
 	}
 	else
 	{
 		if (data->width != 0)
-			print_blank(data->width - data->precision);
-		write(1, str, data->precision);
+			print_blank(data, data->width - data->precision);
+		write_increase(data, str, data->precision);
 	}
 }

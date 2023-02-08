@@ -18,14 +18,20 @@ void	case_c(t_pdata *data)
 	chr = va_arg(data->arg, int);
 	if (data->flag & MINUS_FLAG)
 	{
-		write(1, &chr, 1);
+		write_increase(data, &chr, 1);
+		data->print_count += 1;
 		if (data->width != 0)
-			print_blank(data->width - 1);
+		{
+			print_blank(data, data->width - 1);
+		}
 	}
 	else
 	{
 		if (data->width != 0)
-			print_blank(data->width - 1);
-		write(1, &chr, 1);
+		{
+			print_blank(data, data->width - 1);
+		}
+		write_increase(data, &chr, 1);
+		data->print_count += 1;
 	}
 }

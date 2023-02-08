@@ -15,14 +15,14 @@ void	case_percent(t_pdata *data)
 {
 	if (data->flag & MINUS_FLAG)
 	{
-		write(1, "\045", 1);
+		write_increase(data, "\045", 1);
 		if (data->width != 0)
-			print_blank(data->width - 1);
+			print_blank(data, data->width - 1);
 	}
 	else
 	{
 		if (data->width != 0)
-			print_blank(data->width - 1);
-		write(1, "\045", 1);
+			print_blank(data, data->width - 1);
+		write_increase(data, "\045", 1);
 	}
 }

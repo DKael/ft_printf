@@ -30,7 +30,6 @@ int	ft_printf(const char *format, ...)
 			data.flag = 0;
 			data.precision = 0;
 			data.width = 0;
-			data.print_count++;
 		}
 		else
 			data.print_count++;

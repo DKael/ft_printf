@@ -33,14 +33,14 @@ void	case_u(t_pdata *data)
 static void	u_with_minus(t_pdata *data, int len, char *unum_str)
 {
 	if (data->precision != 0)
-		print_zero(data->precision - len);
-	write(1, unum_str, len);
+		print_zero(data, data->precision - len);
+	write_increase(data, unum_str, len);
 	if (data->width != 0)
 	{
 		if (len > data->precision)
-			print_blank(data->width - len);
+			print_blank(data, data->width - len);
 		else
-			print_blank(data->width - data->precision);
+			print_blank(data, data->width - data->precision);
 	}
 }
 
@@ -49,19 +49,19 @@ static void	u_without_minus(t_pdata *data, int len, char *unum_str)
 	if (data->flag & ZERO_FLAG && data->precision == 0)
 	{
 		if (data->width != 0)
-			print_zero(data->width - len);
+			print_zero(data, data->width - len);
 	}
 	else
 	{
 		if (data->width != 0)
 		{
 			if (len > data->precision)
-				print_blank(data->width - len);
+				print_blank(data, data->width - len);
 			else
-				print_blank(data->width - data->precision);
+				print_blank(data, data->width - data->precision);
 		}
 	}
 	if (data->precision != 0)
-		print_zero(data->precision - len);
-	write(1, unum_str, len);
+		print_zero(data, data->precision - len);
+	write_increase(data, unum_str, len);
 }
