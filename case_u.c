@@ -22,6 +22,8 @@ void	case_u(t_pdata *data)
 
 	unum = va_arg(data->arg, unsigned int);
 	unum_str = ft_itoa_unsigned(unum);
+	if (unum_str == NULL)
+		return (set_error(data));
 	len = ft_strlen(unum_str);
 	if (data->flag & PRECISION && data->precision == 0 && unum == 0)
 		len = 0;

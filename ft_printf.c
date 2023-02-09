@@ -24,8 +24,10 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[(data.idx)] == '%')
 		{
-			format_read(format, &data);
-			format_print(format, &data);
+			if (format_read(format, &data) == -1)
+				return (-1);
+			if (format_print(format, &data) == -1)
+				return (-1);
 			data.head = data.idx + 1;
 			data.flag = 0;
 			data.precision = 0;
@@ -34,14 +36,16 @@ int	ft_printf(const char *format, ...)
 		else
 			data.print_count++;
 	}
-	write(1, &(format[data.head]), data.idx - data.head);
+	if (write(1, &(format[data.head]), data.idx - data.head) == -1)
+		return (-1);
 	va_end(data.arg);
 	return (data.print_count);
 }
 
-void	format_read(const char *format, t_pdata *data)
+int	format_read(const char *format, t_pdata *data)
 {
-	write(1, &(format[data->head]), data->idx - data->head);
+	if (write(1, &(format[data->head]), data->idx - data->head) == -1)
+		return (-1);
 	while (flags_check(format[++(data->idx)]))
 	{
 		if (format[data->idx] == '#')
@@ -59,6 +63,7 @@ void	format_read(const char *format, t_pdata *data)
 		else if (format[data->idx] == '.' )
 			get_precision(format, data);
 	}
+	return (1);
 }
 
 static void	get_width(const char *format, t_pdata *data)
@@ -78,7 +83,7 @@ static void	get_precision(const char *format, t_pdata *data)
 	data->idx--;
 }
 
-void	format_print(const char *format, t_pdata *data)
+int	format_print(const char *format, t_pdata *data)
 {
 	if (format[data->idx] == 'c')
 		case_c(data);
@@ -99,4 +104,7 @@ void	format_print(const char *format, t_pdata *data)
 		data->head = data->idx;
 		(data->print_count)++;
 	}
+	if (data->flag & ERROR_FLAG)
+		return (-1);
+	return (1);
 }

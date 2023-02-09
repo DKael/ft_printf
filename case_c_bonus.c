@@ -20,16 +20,12 @@ void	case_c(t_pdata *data)
 	{
 		write_increase(data, &chr, 1);
 		if (data->width != 0)
-		{
 			print_blank(data, data->width - 1);
-		}
 	}
 	else
 	{
 		if (data->width != 0)
-		{
 			print_blank(data, data->width - 1);
-		}
 		write_increase(data, &chr, 1);
 	}
 }

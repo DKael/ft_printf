@@ -16,19 +16,20 @@ static void	x_without_minus(t_pdata *data, int len, char *hex, t_suffix *sfx);
 
 void	case_x(t_pdata *data, char x_chr)
 {
-	unsigned int	unum;
 	int				len;
 	char			*hex;
 	t_suffix		sfx;
 
-	unum = va_arg(data->arg, unsigned int);
-	data->unum = unum;
-	hex = ft_itoa_hex(unum, x_chr);
+	data->unum = va_arg(data->arg, unsigned int);
+	hex = ft_itoa_hex(data->unum, x_chr);
+	if (hex == NULL)
+		return (set_error(data));
 	len = ft_strlen(hex);
-	if (data->flag & PRECISION && data->precision == 0 && unum == 0)
+	if (data->flag & PRECISION && data->precision == 0
+		&& data->unum == 0)
 		len = 0;
 	sfx.suffix_len = 0;
-	if (data->flag & SHARP_FLAG && unum != 0)
+	if (data->flag & SHARP_FLAG && data->unum != 0)
 	{
 		sfx.suffix = "0x";
 		if (x_chr == 'X')

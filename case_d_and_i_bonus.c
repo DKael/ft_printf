@@ -28,6 +28,8 @@ void	case_d_and_i(t_pdata *data)
 		num_str = ft_itoa_unsigned(num);
 	else
 		num_str = ft_itoa_unsigned(num * -1);
+	if (num_str == NULL)
+		return (set_error(data));
 	len = ft_strlen(num_str);
 	if (data->flag & PRECISION && data->precision == 0 && num == 0)
 		len = 0;

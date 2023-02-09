@@ -47,16 +47,22 @@ void	print_blank(t_pdata *data, int size)
 	if (size > 0)
 	{
 		box = (char *)malloc(sizeof(char) * size);
+		if (box == NULL)
+			return (set_error(data));
 		idx = 0;
 		while (idx < size)
 		{
 			box[idx] = ' ';
 			idx++;
 		}
-		write(1, box, size);
+		if (write(1, box, size) == -1)
+		{
+			free(box);
+			return (set_error(data));
+		}
 		free(box);
 		data->print_count += size;
-	}	
+	}
 }
 
 void	print_zero(t_pdata *data, int size)
@@ -67,13 +73,19 @@ void	print_zero(t_pdata *data, int size)
 	if (size > 0)
 	{
 		box = (char *)malloc(sizeof(char) * size);
+		if (box == NULL)
+			return (set_error(data));
 		idx = 0;
 		while (idx < size)
 		{
 			box[idx] = '0';
 			idx++;
 		}
-		write(1, box, size);
+		if (write(1, box, size) == -1)
+		{
+			free(box);
+			return (set_error(data));
+		}
 		free(box);
 		data->print_count += size;
 	}
@@ -81,6 +93,7 @@ void	print_zero(t_pdata *data, int size)
 
 void	write_increase(t_pdata *data, char *to_write, int len)
 {
-	write(1, to_write, len);
+	if (write(1, to_write, len) == -1)
+		return (set_error(data));
 	data->print_count += len;
 }

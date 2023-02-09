@@ -22,6 +22,8 @@ void	case_p(t_pdata *data)
 
 	ptr = va_arg(data->arg, void *);
 	addr = ft_itoa_ptr(ptr);
+	if (addr == NULL)
+		return (set_error(data));
 	len = ft_strlen(addr);
 	if (data->flag & MINUS_FLAG)
 		p_with_minus(data, len, addr);

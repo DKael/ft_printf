@@ -18,6 +18,7 @@
 # define PLUS_FLAG	8
 # define ZERO_FLAG	16
 # define PRECISION	32
+# define ERROR_FLAG	64
 
 # define TRUE 1
 # define FALSE 0
@@ -48,8 +49,8 @@ typedef struct s_suffix
 }	t_suffix;
 
 int		ft_printf(const char *format, ...);
-void	format_read(const char *format, t_pdata *data);
-void	format_print(const char *format, t_pdata *data);
+int		format_read(const char *format, t_pdata *data);
+int		format_print(const char *format, t_pdata *data);
 void	case_c(t_pdata *data);
 void	case_s(t_pdata *data);
 void	case_p(t_pdata *data);
@@ -65,4 +66,5 @@ char	*ft_itoa_hex(unsigned int n, char chr_x);
 char	*ft_itoa_ptr(void *ptr);
 char	*ft_itoa_unsigned(unsigned int n);
 void	write_increase(t_pdata *data, char *to_write, int len);
+void	set_error(t_pdata *data);
 #endif

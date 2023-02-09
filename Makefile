@@ -21,7 +21,8 @@ SRCS =	ft_printf.c \
 		case_x.c \
 		ft_itoa_hex.c \
 		ft_itoa_ptr.c \
-		ft_itoa_unsigned.c
+		ft_itoa_unsigned.c \
+		error.c
 
 OBJS = 	${SRCS:.c=.o}
 
@@ -36,7 +37,8 @@ SRCS_BONUS =	ft_printf_bonus.c \
 				case_x_bonus.c \
 				ft_itoa_hex_bonus.c \
 				ft_itoa_ptr_bonus.c \
-				ft_itoa_unsigned_bonus.c
+				ft_itoa_unsigned_bonus.c \
+				error_bonus.c
 
 OBJS_BONUS = 	${SRCS_BONUS:.c=.o}
 
