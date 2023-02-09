@@ -72,6 +72,7 @@ static void	get_width(const char *format, t_pdata *data)
 static void	get_precision(const char *format, t_pdata *data)
 {
 	data->precision = 0;
+	data->flag |= PRECISION;
 	while (ft_isdigit(format[++(data->idx)]))
 		data->precision = data->precision * 10 + (format[data->idx] - '0');
 	data->idx--;

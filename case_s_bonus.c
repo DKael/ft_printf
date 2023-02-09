@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "ft_printf_bonus.h"
 
-static void	print_null(t_pdata *data);
-
 void	case_s(t_pdata *data)
 {
 	char	*str;
@@ -21,7 +19,7 @@ void	case_s(t_pdata *data)
 
 	str = va_arg(data->arg, char *);
 	if (str == NULL)
-		return (print_null(data));
+		str = "(null)";
 	len = ft_strlen(str);
 	output_len = len;
 	if (data->flag & PRECISION && len >= data->precision)
@@ -40,10 +38,4 @@ void	case_s(t_pdata *data)
 			print_blank(data, data->width - output_len);
 		write_increase(data, str, output_len);
 	}
-}
-
-static void	print_null(t_pdata *data)
-{
-	write(1, "(null)", 6);
-	data->print_count += 6;
 }

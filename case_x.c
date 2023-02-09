@@ -25,6 +25,8 @@ void	case_x(t_pdata *data, char x_chr)
 	data->unum = unum;
 	hex = ft_itoa_hex(unum, x_chr);
 	len = ft_strlen(hex);
+	if (data->flag & PRECISION && data->precision == 0 && unum == 0)
+		len = 0;
 	sfx.suffix_len = 0;
 	if (data->flag & SHARP_FLAG && unum != 0)
 	{
@@ -58,7 +60,8 @@ static void	x_with_minus(t_pdata *data, int len, char *hex, t_suffix *sfx)
 
 static void	x_without_minus(t_pdata *data, int len, char *hex, t_suffix *sfx)
 {
-	if (data->flag & ZERO_FLAG && data->precision == 0)
+	if (data->flag & ZERO_FLAG && data->precision == 0
+		&& !(data->flag & PRECISION))
 	{
 		if (data->flag & SHARP_FLAG && data->unum != 0)
 			write_increase(data, sfx->suffix, sfx->suffix_len);
