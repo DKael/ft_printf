@@ -54,7 +54,6 @@ ft_printf는 C 언어의 표준 출력 함수 printf()를 직접 구현하는 �
 	•	정수 → 문자열 변환(itoa, itoa_unsigned, itoa_hex) 알고리즘 직접 구현
 	•	다양한 예외 케이스(예: printf("%5.0d", 0)) 처리 과정에서 경계 조건 설계 능력 향상
 	•	플래그와 옵션이 겹칠 때 우선순위를 정의하고 처리하는 복합 로직 구현 경험
-	•	성능 고려: 불필요한 메모리 할당 최소화, write(2) 시스템 콜 최적화
 
 ---
 
@@ -63,8 +62,8 @@ ft_printf는 C 언어의 표준 출력 함수 printf()를 직접 구현하는 �
 ## 📦 라이브러리 빌드
 ### bash
 ```
-    make        # 기본 라이브러리 빌드
-    make bonus  # bonus 구현 포함 빌드
+make        # 기본 라이브러리 빌드
+make bonus  # bonus 구현 포함 빌드
 ```
 빌드 후 libftprintf.a 정적 라이브러리가 생성됩니다.
 
