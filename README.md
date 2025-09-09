@@ -106,5 +106,7 @@ Signed with +: +42
 
 ## 6️⃣ 기술 스택
 	•	언어: C
-	•	빌드 도구: Makefile (GNU make)
+  	•	운영체제/환경: Unix/Linux
+ 	•	빌드 도구: GNU Make
+ 	•	Coding Conventions: Norminette
 	•	헤더/라이브러리: stdarg.h, unistd.h
